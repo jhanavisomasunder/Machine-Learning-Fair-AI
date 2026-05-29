@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unbiased AI Decision System</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Login Screen -->
+    <div id="login-container" class="login-wrapper">
+
+        <!-- Login Card -->
+        <div class="login-card glass-panel" id="login-card">
+            <div class="login-logo">
+                <h2>FairAI<span>.</span></h2>
+                <p>Unbiased AI Decision System</p>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="username" placeholder="Enter your username" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="password" placeholder="Enter your password" required>
+                </div>
+                <div id="login-error" class="auth-error">Incorrect username or password.</div>
+                <button type="submit" class="btn-primary" id="login-btn">Sign In</button>
+            </form>
+            <p class="login-hint">Don't have an account? <a href="#" id="show-register">Register here</a></p>
+        </div>
+
+        <!-- Register Card -->
+        <div class="login-card glass-panel" id="register-card" style="display:none;">
+            <div class="login-logo">
+                <h2>FairAI<span>.</span></h2>
+                <p>Create your account</p>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="reg-name" placeholder="Enter your full name" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" id="reg-username" placeholder="Choose a username" required autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="reg-password" placeholder="Choose a password" required>
+                </div>
+                <div class="form-group">
+                    <label>Confirm Password</label>
+                    <input type="password" id="reg-confirm" placeholder="Confirm your password" required>
+                </div>
+                <div id="register-error" class="auth-error"></div>
+                <div id="register-success" class="auth-success"></div>
+                <button type="submit" class="btn-primary" id="register-btn">Create Account</button>
+            </form>
+            <p class="login-hint">Already have an account? <a href="#" id="show-login">Sign in</a></p>
+        </div>
+
+    </div>
+
+    <!-- Main App -->
+    <div class="app-container" id="main-app" style="display:none;">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar glass-panel">
+            <div class="logo">
+                <h2>FairAI<span>.</span></h2>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#dashboard" id="nav-dashboard">Dashboard</a></li>
+                    <li><a href="#fairness" id="nav-fairness">Fairness & Bias Analysis</a></li>
+                    <li><a href="#upload" id="nav-upload">Analyze Custom CSV</a></li>
+
+                </ul>
+            </nav>
+            <div class="model-toggle">
+                <label class="switch">
+                    <input type="checkbox" id="mitigation-toggle">
+                    <span class="slider round"></span>
+                </label>
+                <span id="toggle-label">Standard Model</span>
+            </div>
+            <div class="report-section">
+                <button id="download-report" class="btn-secondary">Download Report</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header>
+                <h1>AI Decision Dashboard</h1>
+                <p>Simulate loan/income approval with fairness evaluation.</p>
+            </header>
+
+            <div class="grid-container" id="view-dashboard">
+                <!-- Input Form -->
+                <div class="card glass-panel form-section">
+                    <h3>Applicant Details</h3>
+                    <form id="prediction-form">
+                        <div class="form-group">
+                            <label>Age</label>
+                            <input type="number" id="age" value="35" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Workclass</label>
+                            <select id="workclass">
+                                <option value="Private">Private</option>
+                                <option value="Self-emp-not-inc">Self-emp-not-inc</option>
+                                <option value="Local-gov">Local-gov</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Education</label>
+                            <select id="education">
+                                <option value="Bachelors">Bachelors</option>
+                                <option value="HS-grad">HS-grad</option>
+                                <option value="Masters">Masters</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Education Num</label>
+                            <input type="number" id="education_num" value="13" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Marital Status</label>
+                            <select id="marital_status">
+                                <option value="Married-civ-spouse">Married</option>
+                                <option value="Never-married">Never-married</option>
+                                <option value="Divorced">Divorced</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Occupation</label>
+                            <select id="occupation">
+                                <option value="Exec-managerial">Exec-managerial</option>
+                                <option value="Prof-specialty">Prof-specialty</option>
+                                <option value="Craft-repair">Craft-repair</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Relationship</label>
+                            <select id="relationship">
+                                <option value="Husband">Husband</option>
+                                <option value="Wife">Wife</option>
+                                <option value="Not-in-family">Not-in-family</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Race (Sensitive)</label>
+                            <select id="race">
+                                <option value="White">White</option>
+                                <option value="Black">Black</option>
+                                <option value="Asian-Pac-Islander">Asian</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Sex (Sensitive)</label>
+                            <select id="sex">
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Capital Gain</label>
+                            <input type="number" id="capital_gain" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Capital Loss</label>
+                            <input type="number" id="capital_loss" value="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Hours/Week</label>
+                            <input type="number" id="hours_per_week" value="40" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Native Country</label>
+                            <select id="native_country">
+                                <option value="United-States">United States</option>
+                                <option value="Mexico">Mexico</option>
+                                <option value="Canada">Canada</option>
+                                <option value="India">India</option>
+                                <option value="Germany">Germany</option>
+                                <option value="United-Kingdom">United Kingdom</option>
+                                <option value="China">China</option>
+                                <option value="Japan">Japan</option>
+                                <option value="France">France</option>
+                                <option value="Italy">Italy</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="El-Salvador">El Salvador</option>
+                                <option value="Cuba">Cuba</option>
+                            </select>
+                        </div>
+
+                        <input type="hidden" id="fnlwgt" value="200000">
+                        <button type="submit" class="btn-primary">Predict Outcome</button>
+                    </form>
+                </div>
+
+                <!-- Results & XAI -->
+                <div class="results-section">
+                    <div class="card glass-panel outcome-card">
+                        <h3>Prediction Result</h3>
+                        <div id="outcome-display" class="outcome pending">Awaiting Input...</div>
+                        <p id="probability-display">Confidence: --%</p>
+
+                        <!-- Prediction Bias Insight -->
+                        <div id="prediction-bias-insight" class="bias-alert"
+                            style="display:none; margin-top: 1.5rem; text-align: left;">
+                            <!-- Dynamic bias explanation for this specific prediction -->
+                        </div>
+                    </div>
+
+                    <div class="card glass-panel xai-card">
+                        <h3>Feature Importance (SHAP)</h3>
+                        <div class="chart-container">
+                            <canvas id="shapChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid-container hidden" id="view-fairness">
+                <!-- Fairness Chart -->
+                <div class="card glass-panel full-width">
+                    <h3>Fairness Dashboard</h3>
+                    <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Compare standard and bias-mitigated
+                        model performance across fairness metrics.</p>
+                    <div class="chart-wrapper">
+                        <canvas id="fairnessChart"></canvas>
+                    </div>
+                    <div class="bias-alert" id="bias-alert"></div>
+                </div>
+
+                <!-- Why Bias Happens -->
+                <div class="card glass-panel full-width" id="bias-causes-card" style="display:none;">
+                    <h3>Why Is Bias Occurring?</h3>
+                    <div id="bias-severity-bar" style="margin-bottom:1.5rem;"></div>
+                    <div id="bias-causes-list"></div>
+                </div>
+
+                <!-- Solutions -->
+                <div class="card glass-panel full-width" id="bias-solutions-card" style="display:none;">
+                    <h3>Recommended Solutions</h3>
+                    <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Ranked by effectiveness — apply these
+                        techniques to reduce the detected bias.</p>
+                    <div id="bias-solutions-list"></div>
+                </div>
+            </div>
+
+            <div class="grid-container hidden" id="view-upload">
+                <div class="card glass-panel full-width">
+                    <h3>Analyze Your Custom Dataset</h3>
+                    <p style="color:var(--text-secondary); margin-bottom:1.5rem;">Upload <strong>any</strong> CSV file. Our AI will automatically detect potential sensitive attributes (like gender/race) and target variables to analyze bias. No strict formatting required!</p>
+                    
+                    <div id="upload-zone"
+                        style="border: 2px dashed var(--panel-border); padding: 3rem; border-radius: 12px; text-align: center; cursor: pointer; transition: var(--transition);">
+                        <div style="font-size: 3rem; margin-bottom: 1rem;"></div>
+                        <p style="font-weight: 600;">Click to upload or drag and drop any CSV</p>
+                        <p style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.5rem;">The system will
+                            auto-detect columns for you.</p>
+                        <input type="file" id="csv-file-input" accept=".csv" style="display:none;">
+                    </div>
+
+                    <div id="upload-status" style="margin-top: 1.5rem; display: none;" class="auth-success"></div>
+                    <div id="upload-error" style="margin-top: 1.5rem; display: none;" class="auth-error"></div>
+                </div>
+
+                <!-- Custom Analysis Results (Hidden until upload) -->
+                <div id="custom-results-area" class="full-width" style="display:none;">
+                    <div class="card glass-panel full-width" style="margin-bottom: 2rem;">
+                        <h3>Analysis Results for <span id="custom-filename" style="color: var(--accent);"></span></h3>
+                        <div id="custom-severity-bar" style="margin-bottom: 2rem;"></div>
+                        <div id="custom-causes-list"></div>
+                    </div>
+
+                    <div class="card glass-panel full-width">
+                        <h3>Fairness Impact</h3>
+                        <div class="chart-wrapper" style="height: 300px;">
+                            <canvas id="customFairnessChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </main>
+    </div>
+    <script src="app.js"></script>
