@@ -1,2 +1,2 @@
 # Machine-Learning-Fair-AI
-[![Watch the video](https://img.youtube.com/vi/ye9CN-XeshKorGJ9/maxresdefault.jpg)](https://youtu.be/ye9CN-XeshKorGJ9)
+[![Watch the video](https://img.youtube.com/vi/KvyudZ_s8cw0bvUq/maxresdefault.jpg)](https://youtu.be/KvyudZ_s8cw0bvUq)
