@@ -1,2 +1,4 @@
 # Machine-Learning-Fair-AI
-[![Watch the video](https://img.youtube.com/vi/AWb-WrBOnfo/maxresdefault.jpg)](https://youtu.be/AWb-WrBOnfo)
+<a href="https://youtu.be/AWb-WrBOnfo" target="_blank">
+  <img src="https://img.shields.io/badge/Watch%20Video-FF0000?style=for-the-badge&logo=youtube&logoColor=white" alt="Watch Video" />
+</a>
